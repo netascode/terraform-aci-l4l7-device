@@ -3,14 +3,14 @@ version: '>= 0.14.0'
 formatter: markdown table
 
 content: |-
-  [![Tests](https://github.com/netascode/terraform-aci-scaffolding/actions/workflows/test.yml/badge.svg)](https://github.com/netascode/terraform-aci-scaffolding/actions/workflows/test.yml)
+  [![Tests](https://github.com/netascode/terraform-aci-l4l7-device/actions/workflows/test.yml/badge.svg)](https://github.com/netascode/terraform-aci-l4l7-device/actions/workflows/test.yml)
 
-  # Terraform ACI Scaffolding Module
+  # Terraform ACI L4L7 Device Module
 
-  Description
+  Manages L4L7 Device
 
   Location in GUI:
-  `Tenants` » `XXX`
+  `Tenants` » `XXX` » `Services` » `L4-L7` » `Devices`
 
   ## Examples
 
