@@ -237,8 +237,8 @@ variable "logical_interfaces" {
     alias = optional(string)
     vlan  = number
     concrete_interfaces = optional(list(object({
-      device         = string
-      interface_name = string
+      device    = string
+      interface = string
     })))
   }))
   default = []
@@ -273,8 +273,8 @@ variable "logical_interfaces" {
 
   validation {
     condition = alltrue(flatten([
-      for l in var.logical_interfaces : [for c in coalesce(l.concrete_interfaces, []) : can(regex("^[a-zA-Z0-9_.-]{0,64}$", c.interface_name))]
+      for l in var.logical_interfaces : [for c in coalesce(l.concrete_interfaces, []) : can(regex("^[a-zA-Z0-9_.-]{0,64}$", c.interface))]
     ]))
-    error_message = "`interface_name`: Allowed characters: `a`-`z`, `A`-`Z`, `0`-`9`, `_`, `.`, `-`. Maximum characters: 64."
+    error_message = "`interface`: Allowed characters: `a`-`z`, `A`-`Z`, `0`-`9`, `_`, `.`, `-`. Maximum characters: 64."
   }
 }

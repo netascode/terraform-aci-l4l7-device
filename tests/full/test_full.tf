@@ -47,8 +47,8 @@ module "main" {
     alias = "INT1-ALIAS"
     vlan  = 10
     concrete_interfaces = [{
-      device         = "CDEV1"
-      interface_name = "CINT1"
+      device    = "CDEV1"
+      interface = "CINT1"
     }]
   }]
 }

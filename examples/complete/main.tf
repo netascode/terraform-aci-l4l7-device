@@ -1,6 +1,6 @@
 module "aci_l4l7_device" {
   source  = "netascode/l4l7-device/aci"
-  version = ">= 0.0.1"
+  version = ">= 0.0.2"
 
   tenant          = "ABC"
   name            = "DEV1"
@@ -30,8 +30,8 @@ module "aci_l4l7_device" {
     alias = "INT1-ALIAS"
     vlan  = 10
     concrete_interfaces = [{
-      device         = "CDEV1"
-      interface_name = "CINT1"
+      device    = "CDEV1"
+      interface = "CINT1"
     }]
   }]
 }
