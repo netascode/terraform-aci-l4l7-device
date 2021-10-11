@@ -51,7 +51,7 @@ resource "aci_rest" "vnsLDevVip" {
 
 resource "aci_rest" "vnsRsALDevToPhysDomP" {
   count      = var.physical_domain != "" ? 1 : 0
-  dn         = "${aci_rest.vnsLDevVip.id}/rsALDevToPhysDomP"
+  dn         = "${aci_rest.vnsLDevVip.dn}/rsALDevToPhysDomP"
   class_name = "vnsRsALDevToPhysDomP"
   content = {
     tDn = "uni/phys-${var.physical_domain}"
@@ -60,7 +60,7 @@ resource "aci_rest" "vnsRsALDevToPhysDomP" {
 
 resource "aci_rest" "vnsCDev" {
   for_each   = { for device in var.concrete_devices : device.name => device }
-  dn         = "${aci_rest.vnsLDevVip.id}/cDev-${each.value.name}"
+  dn         = "${aci_rest.vnsLDevVip.dn}/cDev-${each.value.name}"
   class_name = "vnsCDev"
   content = {
     cloneCount       = "0"
@@ -77,7 +77,7 @@ resource "aci_rest" "vnsCDev" {
 
 resource "aci_rest" "vnsCIf" {
   for_each   = { for interface in local.concrete_dev_ifaces : interface.id => interface }
-  dn         = "${aci_rest.vnsCDev[each.value.device].id}/cIf-[${each.value.interface}]"
+  dn         = "${aci_rest.vnsCDev[each.value.device].dn}/cIf-[${each.value.interface}]"
   class_name = "vnsCIf"
   content = {
     name      = each.value.interface
@@ -88,7 +88,7 @@ resource "aci_rest" "vnsCIf" {
 
 resource "aci_rest" "vnsRsCIfPathAtt_port" {
   for_each   = { for interface in local.concrete_dev_ifaces : interface.id => interface if interface.port != null }
-  dn         = "${aci_rest.vnsCIf["${each.value.device}-${each.value.interface}"].id}/rsCIfPathAtt"
+  dn         = "${aci_rest.vnsCIf["${each.value.device}-${each.value.interface}"].dn}/rsCIfPathAtt"
   class_name = "vnsRsCIfPathAtt"
   content = {
     tDn = format(each.value.fex_id != null ? "topology/pod-%s/paths-%s/extpaths-${each.value.fex_id}/pathep-[eth%s/%s]" : "topology/pod-%s/paths-%s/pathep-[eth%s/%s]", each.value.pod_id != null ? each.value.pod_id : 1, each.value.node_id, each.value.module != null ? each.value.module : 1, each.value.port)
@@ -97,7 +97,7 @@ resource "aci_rest" "vnsRsCIfPathAtt_port" {
 
 resource "aci_rest" "vnsRsCIfPathAtt_channel" {
   for_each   = { for interface in local.concrete_dev_ifaces : interface.id => interface if interface.channel != null }
-  dn         = "${aci_rest.vnsCIf["${each.value.device}-${each.value.interface}"].id}/rsCIfPathAtt"
+  dn         = "${aci_rest.vnsCIf["${each.value.device}-${each.value.interface}"].dn}/rsCIfPathAtt"
   class_name = "vnsRsCIfPathAtt"
   content = {
     tDn = format(each.value.node2_id != null ? "topology/pod-%s/protpaths-%s-%s/pathep-[%s]" : "topology/pod-%s/paths-%s/pathep-[%[4]s]", each.value.pod_id != null ? each.value.pod_id : 1, each.value.node_id, each.value.node2_id, each.value.channel)
@@ -106,7 +106,7 @@ resource "aci_rest" "vnsRsCIfPathAtt_channel" {
 
 resource "aci_rest" "vnsLIf" {
   for_each   = { for logical_iface in var.logical_interfaces : logical_iface.name => logical_iface }
-  dn         = "${aci_rest.vnsLDevVip.id}/lIf-${each.value.name}"
+  dn         = "${aci_rest.vnsLDevVip.dn}/lIf-${each.value.name}"
   class_name = "vnsLIf"
   content = {
     encap     = "vlan-${each.value.vlan}"
@@ -116,9 +116,9 @@ resource "aci_rest" "vnsLIf" {
 }
 resource "aci_rest" "vnsRsCIfAttN" {
   for_each   = { for concrete_iface in local.logical_iface_concrete_iface : concrete_iface.id => concrete_iface }
-  dn         = "${aci_rest.vnsLIf[each.value.logical_iface].id}/rscIfAttN-[${aci_rest.vnsCIf["${each.value.device}-${each.value.concrete_iface}"].id}]"
+  dn         = "${aci_rest.vnsLIf[each.value.logical_iface].dn}/rscIfAttN-[${aci_rest.vnsCIf["${each.value.device}-${each.value.concrete_iface}"].dn}]"
   class_name = "vnsRsCIfAttN"
   content = {
-    tDn = aci_rest.vnsCIf["${each.value.device}-${each.value.concrete_iface}"].id
+    tDn = aci_rest.vnsCIf["${each.value.device}-${each.value.concrete_iface}"].dn
   }
 }
