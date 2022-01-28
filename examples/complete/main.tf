@@ -1,6 +1,6 @@
 module "aci_l4l7_device" {
   source  = "netascode/l4l7-device/aci"
-  version = ">= 0.0.2"
+  version = ">= 0.1.0"
 
   tenant          = "ABC"
   name            = "DEV1"

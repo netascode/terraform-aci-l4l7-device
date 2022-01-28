@@ -5,13 +5,13 @@ terraform {
     }
 
     aci = {
-      source  = "netascode/aci"
-      version = ">=0.2.0"
+      source  = "CiscoDevNet/aci"
+      version = ">=2.0.0"
     }
   }
 }
 
-resource "aci_rest" "fvTenant" {
+resource "aci_rest_managed" "fvTenant" {
   dn         = "uni/tn-TF"
   class_name = "fvTenant"
 }
@@ -19,7 +19,7 @@ resource "aci_rest" "fvTenant" {
 module "main" {
   source = "../.."
 
-  tenant          = aci_rest.fvTenant.content.name
+  tenant          = aci_rest_managed.fvTenant.content.name
   name            = "DEV1"
   alias           = "DEV1-ALIAS"
   context_aware   = "multi-Context"
@@ -53,8 +53,8 @@ module "main" {
   }]
 }
 
-data "aci_rest" "vnsLDevVip" {
-  dn = "uni/tn-${aci_rest.fvTenant.content.name}/lDevVip-${module.main.name}"
+data "aci_rest_managed" "vnsLDevVip" {
+  dn = "uni/tn-${aci_rest_managed.fvTenant.content.name}/lDevVip-${module.main.name}"
 
   depends_on = [module.main]
 }
@@ -64,79 +64,79 @@ resource "test_assertions" "vnsLDevVip" {
 
   equal "name" {
     description = "name"
-    got         = data.aci_rest.vnsLDevVip.content.name
+    got         = data.aci_rest_managed.vnsLDevVip.content.name
     want        = module.main.name
   }
 
   equal "contextAware" {
     description = "contextAware"
-    got         = data.aci_rest.vnsLDevVip.content.contextAware
+    got         = data.aci_rest_managed.vnsLDevVip.content.contextAware
     want        = "multi-Context"
   }
 
   equal "devtype" {
     description = "devtype"
-    got         = data.aci_rest.vnsLDevVip.content.devtype
+    got         = data.aci_rest_managed.vnsLDevVip.content.devtype
     want        = "PHYSICAL"
   }
 
   equal "funcType" {
     description = "funcType"
-    got         = data.aci_rest.vnsLDevVip.content.funcType
+    got         = data.aci_rest_managed.vnsLDevVip.content.funcType
     want        = "GoTo"
   }
 
   equal "isCopy" {
     description = "isCopy"
-    got         = data.aci_rest.vnsLDevVip.content.isCopy
+    got         = data.aci_rest_managed.vnsLDevVip.content.isCopy
     want        = "no"
   }
 
   equal "managed" {
     description = "managed"
-    got         = data.aci_rest.vnsLDevVip.content.managed
+    got         = data.aci_rest_managed.vnsLDevVip.content.managed
     want        = "no"
   }
 
   equal "mode" {
     description = "mode"
-    got         = data.aci_rest.vnsLDevVip.content.mode
+    got         = data.aci_rest_managed.vnsLDevVip.content.mode
     want        = "legacy-Mode"
   }
 
   equal "nameAlias" {
     description = "nameAlias"
-    got         = data.aci_rest.vnsLDevVip.content.nameAlias
+    got         = data.aci_rest_managed.vnsLDevVip.content.nameAlias
     want        = "DEV1-ALIAS"
   }
 
   equal "packageModel" {
     description = "packageModel"
-    got         = data.aci_rest.vnsLDevVip.content.packageModel
+    got         = data.aci_rest_managed.vnsLDevVip.content.packageModel
     want        = ""
   }
 
   equal "promMode" {
     description = "promMode"
-    got         = data.aci_rest.vnsLDevVip.content.promMode
+    got         = data.aci_rest_managed.vnsLDevVip.content.promMode
     want        = "no"
   }
 
   equal "svcType" {
     description = "svcType"
-    got         = data.aci_rest.vnsLDevVip.content.svcType
+    got         = data.aci_rest_managed.vnsLDevVip.content.svcType
     want        = "FW"
   }
 
   equal "trunking" {
     description = "trunking"
-    got         = data.aci_rest.vnsLDevVip.content.trunking
+    got         = data.aci_rest_managed.vnsLDevVip.content.trunking
     want        = "no"
   }
 }
 
-data "aci_rest" "vnsRsALDevToPhysDomP" {
-  dn = "${data.aci_rest.vnsLDevVip.id}/rsALDevToPhysDomP"
+data "aci_rest_managed" "vnsRsALDevToPhysDomP" {
+  dn = "${data.aci_rest_managed.vnsLDevVip.id}/rsALDevToPhysDomP"
 
   depends_on = [module.main]
 }
@@ -146,13 +146,13 @@ resource "test_assertions" "vnsRsALDevToPhysDomP" {
 
   equal "tDn" {
     description = "tDn"
-    got         = data.aci_rest.vnsRsALDevToPhysDomP.content.tDn
+    got         = data.aci_rest_managed.vnsRsALDevToPhysDomP.content.tDn
     want        = "uni/phys-PD1"
   }
 }
 
-data "aci_rest" "vnsCDev" {
-  dn = "${data.aci_rest.vnsLDevVip.id}/cDev-CDEV1"
+data "aci_rest_managed" "vnsCDev" {
+  dn = "${data.aci_rest_managed.vnsLDevVip.id}/cDev-CDEV1"
 
   depends_on = [module.main]
 }
@@ -162,61 +162,61 @@ resource "test_assertions" "vnsCDev" {
 
   equal "cloneCount" {
     description = "cloneCount"
-    got         = data.aci_rest.vnsCDev.content.cloneCount
+    got         = data.aci_rest_managed.vnsCDev.content.cloneCount
     want        = "0"
   }
 
   equal "devCtxLbl" {
     description = "devCtxLbl"
-    got         = data.aci_rest.vnsCDev.content.devCtxLbl
+    got         = data.aci_rest_managed.vnsCDev.content.devCtxLbl
     want        = ""
   }
 
   equal "host" {
     description = "host"
-    got         = data.aci_rest.vnsCDev.content.host
+    got         = data.aci_rest_managed.vnsCDev.content.host
     want        = ""
   }
 
   equal "isCloneOperation" {
     description = "isCloneOperation"
-    got         = data.aci_rest.vnsCDev.content.isCloneOperation
+    got         = data.aci_rest_managed.vnsCDev.content.isCloneOperation
     want        = "no"
   }
 
   equal "isTemplate" {
     description = "isTemplate"
-    got         = data.aci_rest.vnsCDev.content.isTemplate
+    got         = data.aci_rest_managed.vnsCDev.content.isTemplate
     want        = "no"
   }
 
   equal "name" {
     description = "name"
-    got         = data.aci_rest.vnsCDev.content.name
+    got         = data.aci_rest_managed.vnsCDev.content.name
     want        = "CDEV1"
   }
 
   equal "nameAlias" {
     description = "nameAlias"
-    got         = data.aci_rest.vnsCDev.content.nameAlias
+    got         = data.aci_rest_managed.vnsCDev.content.nameAlias
     want        = "CDEV1-ALIAS"
   }
 
   equal "vcenterName" {
     description = "vcenterName"
-    got         = data.aci_rest.vnsCDev.content.vcenterName
+    got         = data.aci_rest_managed.vnsCDev.content.vcenterName
     want        = ""
   }
 
   equal "vmName" {
     description = "vmName"
-    got         = data.aci_rest.vnsCDev.content.vmName
+    got         = data.aci_rest_managed.vnsCDev.content.vmName
     want        = ""
   }
 }
 
-data "aci_rest" "vnsCIf" {
-  dn = "${data.aci_rest.vnsCDev.id}/cIf-[CINT1]"
+data "aci_rest_managed" "vnsCIf" {
+  dn = "${data.aci_rest_managed.vnsCDev.id}/cIf-[CINT1]"
 
   depends_on = [module.main]
 }
@@ -226,25 +226,25 @@ resource "test_assertions" "vnsCIf" {
 
   equal "name" {
     description = "name"
-    got         = data.aci_rest.vnsCIf.content.name
+    got         = data.aci_rest_managed.vnsCIf.content.name
     want        = "CINT1"
   }
 
   equal "nameAlias" {
     description = "nameAlias"
-    got         = data.aci_rest.vnsCIf.content.nameAlias
+    got         = data.aci_rest_managed.vnsCIf.content.nameAlias
     want        = "CINT1-ALIAS"
   }
 
   equal "vnicName" {
     description = "vnicName"
-    got         = data.aci_rest.vnsCIf.content.vnicName
+    got         = data.aci_rest_managed.vnsCIf.content.vnicName
     want        = ""
   }
 }
 
-data "aci_rest" "vnsRsCIfPathAtt_channel" {
-  dn = "${data.aci_rest.vnsCIf.id}/rsCIfPathAtt"
+data "aci_rest_managed" "vnsRsCIfPathAtt_channel" {
+  dn = "${data.aci_rest_managed.vnsCIf.id}/rsCIfPathAtt"
 
   depends_on = [module.main]
 }
@@ -254,13 +254,13 @@ resource "test_assertions" "vnsRsCIfPathAtt_channel" {
 
   equal "tDn" {
     description = "tDn"
-    got         = data.aci_rest.vnsRsCIfPathAtt_channel.content.tDn
+    got         = data.aci_rest_managed.vnsRsCIfPathAtt_channel.content.tDn
     want        = "topology/pod-2/protpaths-101-102/pathep-[VPC1]"
   }
 }
 
-data "aci_rest" "vnsLIf" {
-  dn = "${data.aci_rest.vnsLDevVip.id}/lIf-INT1"
+data "aci_rest_managed" "vnsLIf" {
+  dn = "${data.aci_rest_managed.vnsLDevVip.id}/lIf-INT1"
 
   depends_on = [module.main]
 }
@@ -270,25 +270,25 @@ resource "test_assertions" "vnsLIf" {
 
   equal "encap" {
     description = "encap"
-    got         = data.aci_rest.vnsLIf.content.encap
+    got         = data.aci_rest_managed.vnsLIf.content.encap
     want        = "vlan-10"
   }
 
   equal "name" {
     description = "name"
-    got         = data.aci_rest.vnsLIf.content.name
+    got         = data.aci_rest_managed.vnsLIf.content.name
     want        = "INT1"
   }
 
   equal "nameAlias" {
     description = "nameAlias"
-    got         = data.aci_rest.vnsLIf.content.nameAlias
+    got         = data.aci_rest_managed.vnsLIf.content.nameAlias
     want        = "INT1-ALIAS"
   }
 }
 
-data "aci_rest" "vnsRsCIfAttN" {
-  dn = "${data.aci_rest.vnsLIf.id}/rscIfAttN-[${data.aci_rest.vnsCIf.id}]"
+data "aci_rest_managed" "vnsRsCIfAttN" {
+  dn = "${data.aci_rest_managed.vnsLIf.id}/rscIfAttN-[${data.aci_rest_managed.vnsCIf.id}]"
 
   depends_on = [module.main]
 }
@@ -298,7 +298,7 @@ resource "test_assertions" "vnsRsCIfAttN" {
 
   equal "tDn" {
     description = "tDn"
-    got         = data.aci_rest.vnsRsCIfAttN.content.tDn
-    want        = data.aci_rest.vnsCIf.id
+    got         = data.aci_rest_managed.vnsRsCIfAttN.content.tDn
+    want        = data.aci_rest_managed.vnsCIf.id
   }
 }
