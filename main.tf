@@ -69,9 +69,9 @@ resource "aci_rest_managed" "vnsCDev" {
     isCloneOperation = "no"
     isTemplate       = "no"
     name             = each.value.name
-    nameAlias        = each.value.alias != null ? each.value.alias : ""
-    vcenterName      = each.value.vcenter_name != null ? each.value.vcenter_name : ""
-    vmName           = each.value.vm_name != null ? each.value.vm_name : ""
+    nameAlias        = each.value.alias
+    vcenterName      = each.value.vcenter_name
+    vmName           = each.value.vm_name
   }
 }
 
@@ -81,8 +81,8 @@ resource "aci_rest_managed" "vnsCIf" {
   class_name = "vnsCIf"
   content = {
     name      = each.value.interface
-    nameAlias = each.value.alias != null ? each.value.alias : ""
-    vnicName  = each.value.vnic_name != null ? each.value.vnic_name : ""
+    nameAlias = each.value.alias
+    vnicName  = each.value.vnic_name
   }
 }
 
@@ -91,7 +91,7 @@ resource "aci_rest_managed" "vnsRsCIfPathAtt_port" {
   dn         = "${aci_rest_managed.vnsCIf["${each.value.device}-${each.value.interface}"].dn}/rsCIfPathAtt"
   class_name = "vnsRsCIfPathAtt"
   content = {
-    tDn = format(each.value.fex_id != null ? "topology/pod-%s/paths-%s/extpaths-${each.value.fex_id}/pathep-[eth%s/%s]" : "topology/pod-%s/paths-%s/pathep-[eth%s/%s]", each.value.pod_id != null ? each.value.pod_id : 1, each.value.node_id, each.value.module != null ? each.value.module : 1, each.value.port)
+    tDn = format(each.value.fex_id != null ? "topology/pod-%s/paths-%s/extpaths-${each.value.fex_id}/pathep-[eth%s/%s]" : "topology/pod-%s/paths-%s/pathep-[eth%s/%s]", each.value.pod_id, each.value.node_id, each.value.module, each.value.port)
   }
 }
 
@@ -100,7 +100,7 @@ resource "aci_rest_managed" "vnsRsCIfPathAtt_channel" {
   dn         = "${aci_rest_managed.vnsCIf["${each.value.device}-${each.value.interface}"].dn}/rsCIfPathAtt"
   class_name = "vnsRsCIfPathAtt"
   content = {
-    tDn = format(each.value.node2_id != null ? "topology/pod-%s/protpaths-%s-%s/pathep-[%s]" : "topology/pod-%s/paths-%s/pathep-[%[4]s]", each.value.pod_id != null ? each.value.pod_id : 1, each.value.node_id, each.value.node2_id, each.value.channel)
+    tDn = format(each.value.node2_id != null ? "topology/pod-%s/protpaths-%s-%s/pathep-[%s]" : "topology/pod-%s/paths-%s/pathep-[%[4]s]", each.value.pod_id, each.value.node_id, each.value.node2_id, each.value.channel)
   }
 }
 
@@ -111,7 +111,7 @@ resource "aci_rest_managed" "vnsLIf" {
   content = {
     encap     = "vlan-${each.value.vlan}"
     name      = each.value.name
-    nameAlias = each.value.alias != null ? each.value.alias : ""
+    nameAlias = each.value.alias
   }
 }
 resource "aci_rest_managed" "vnsRsCIfAttN" {

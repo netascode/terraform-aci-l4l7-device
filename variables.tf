@@ -112,22 +112,21 @@ variable "concrete_devices" {
   description = "List of concrete devices. Allowed values `pod_id`: 1-255. Default value `pod_id`: 1. Allowed values `node_id`, `node2_id`: 1-4000. Allowed values `fex_id`: 101-199. Allowed values `module`: 1-9. Default value `module`: 1. Allowed values `port`: 1-127."
   type = list(object({
     name         = string
-    alias        = optional(string)
-    vcenter_name = optional(string)
-    vm_name      = optional(string)
+    alias        = optional(string, "")
+    vcenter_name = optional(string, "")
+    vm_name      = optional(string, "")
     interfaces = optional(list(object({
       name      = string
-      alias     = optional(string)
-      vnic_name = optional(string)
-      pod_id    = optional(number)
+      alias     = optional(string, "")
+      vnic_name = optional(string, "")
+      pod_id    = optional(number, 1)
       node_id   = number
       node2_id  = optional(number)
       fex_id    = optional(number)
-      module    = optional(number)
+      module    = optional(number, 1)
       port      = optional(number)
       channel   = optional(string)
-    })))
-
+    })), [])
   }))
   default = []
 
@@ -147,14 +146,14 @@ variable "concrete_devices" {
 
   validation {
     condition = alltrue([
-      for c in var.concrete_devices : c.vcenter_name == null || try(regex("^.{0,512}$", c.vcenter_name), false)
+      for c in var.concrete_devices : c.vcenter_name == null || try(can(regex("^.{0,512}$", c.vcenter_name)), false)
     ])
     error_message = "`vcenter_name`: Maximum characters: 512."
   }
 
   validation {
     condition = alltrue([
-      for c in var.concrete_devices : c.vm_name == null || try(regex("^.{0,512}$", c.vm_name), false)
+      for c in var.concrete_devices : c.vm_name == null || try(can(regex("^.{0,512}$", c.vm_name)), false)
     ])
     error_message = "`vm_name`: Maximum characters: 512."
   }
@@ -234,7 +233,7 @@ variable "logical_interfaces" {
   description = "List of logical interfaces. Allowed values `vlan`: 1-4096."
   type = list(object({
     name  = string
-    alias = optional(string)
+    alias = optional(string, "")
     vlan  = number
     concrete_interfaces = optional(list(object({
       device    = string

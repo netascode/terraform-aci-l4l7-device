@@ -13,7 +13,7 @@ Location in GUI:
 ```hcl
 module "aci_l4l7_device" {
   source  = "netascode/l4l7-device/aci"
-  version = ">= 0.1.0"
+  version = ">= 0.2.0"
 
   tenant          = "ABC"
   name            = "DEV1"
@@ -54,7 +54,7 @@ module "aci_l4l7_device" {
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.0 |
 | <a name="requirement_aci"></a> [aci](#requirement\_aci) | >= 2.0.0 |
 
 ## Providers
@@ -79,8 +79,8 @@ module "aci_l4l7_device" {
 | <a name="input_service_type"></a> [service\_type](#input\_service\_type) | Service type. Choices: `ADC`, `FW`, `OTHERS`, `COPY`, `NATIVELB`. | `string` | `"OTHERS"` | no |
 | <a name="input_trunking"></a> [trunking](#input\_trunking) | Trunking. | `bool` | `false` | no |
 | <a name="input_physical_domain"></a> [physical\_domain](#input\_physical\_domain) | Phyical domain name. | `string` | `""` | no |
-| <a name="input_concrete_devices"></a> [concrete\_devices](#input\_concrete\_devices) | List of concrete devices. Allowed values `pod_id`: 1-255. Default value `pod_id`: 1. Allowed values `node_id`, `node2_id`: 1-4000. Allowed values `fex_id`: 101-199. Allowed values `module`: 1-9. Default value `module`: 1. Allowed values `port`: 1-127. | <pre>list(object({<br>    name         = string<br>    alias        = optional(string)<br>    vcenter_name = optional(string)<br>    vm_name      = optional(string)<br>    interfaces = optional(list(object({<br>      name      = string<br>      alias     = optional(string)<br>      vnic_name = optional(string)<br>      pod_id    = optional(number)<br>      node_id   = number<br>      node2_id  = optional(number)<br>      fex_id    = optional(number)<br>      module    = optional(number)<br>      port      = optional(number)<br>      channel   = optional(string)<br>    })))<br><br>  }))</pre> | `[]` | no |
-| <a name="input_logical_interfaces"></a> [logical\_interfaces](#input\_logical\_interfaces) | List of logical interfaces. Allowed values `vlan`: 1-4096. | <pre>list(object({<br>    name  = string<br>    alias = optional(string)<br>    vlan  = number<br>    concrete_interfaces = optional(list(object({<br>      device    = string<br>      interface = string<br>    })))<br>  }))</pre> | `[]` | no |
+| <a name="input_concrete_devices"></a> [concrete\_devices](#input\_concrete\_devices) | List of concrete devices. Allowed values `pod_id`: 1-255. Default value `pod_id`: 1. Allowed values `node_id`, `node2_id`: 1-4000. Allowed values `fex_id`: 101-199. Allowed values `module`: 1-9. Default value `module`: 1. Allowed values `port`: 1-127. | <pre>list(object({<br>    name         = string<br>    alias        = optional(string, "")<br>    vcenter_name = optional(string, "")<br>    vm_name      = optional(string, "")<br>    interfaces = optional(list(object({<br>      name      = string<br>      alias     = optional(string, "")<br>      vnic_name = optional(string, "")<br>      pod_id    = optional(number, 1)<br>      node_id   = number<br>      node2_id  = optional(number)<br>      fex_id    = optional(number)<br>      module    = optional(number, 1)<br>      port      = optional(number)<br>      channel   = optional(string)<br>    })), [])<br>  }))</pre> | `[]` | no |
+| <a name="input_logical_interfaces"></a> [logical\_interfaces](#input\_logical\_interfaces) | List of logical interfaces. Allowed values `vlan`: 1-4096. | <pre>list(object({<br>    name  = string<br>    alias = optional(string, "")<br>    vlan  = number<br>    concrete_interfaces = optional(list(object({<br>      device    = string<br>      interface = string<br>    })))<br>  }))</pre> | `[]` | no |
 
 ## Outputs
 
