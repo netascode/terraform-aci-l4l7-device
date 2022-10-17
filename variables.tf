@@ -258,7 +258,7 @@ variable "logical_interfaces" {
 
   validation {
     condition = alltrue([
-      for l in var.logical_interfaces : l.vlan >= 1 && l.vlan <= 4096
+      for l in var.logical_interfaces : l.vlan == null || try(l.vlan >= 1 && l.vlan <= 4096, false)
     ])
     error_message = "`vlan`: Minimum value: 1. Maximum value: 4096."
   }
