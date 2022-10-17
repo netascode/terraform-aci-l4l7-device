@@ -234,7 +234,7 @@ variable "logical_interfaces" {
   type = list(object({
     name  = string
     alias = optional(string, "")
-    vlan  = number
+    vlan  = optional(number)
     concrete_interfaces = optional(list(object({
       device    = string
       interface = string

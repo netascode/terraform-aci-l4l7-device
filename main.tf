@@ -109,7 +109,7 @@ resource "aci_rest_managed" "vnsLIf" {
   dn         = "${aci_rest_managed.vnsLDevVip.dn}/lIf-${each.value.name}"
   class_name = "vnsLIf"
   content = {
-    encap     = "vlan-${each.value.vlan}"
+    encap     = each.value.vlan != null ? "vlan-${each.value.vlan}" : "unknown"
     name      = each.value.name
     nameAlias = each.value.alias
   }
