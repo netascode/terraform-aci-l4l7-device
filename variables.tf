@@ -120,7 +120,7 @@ variable "concrete_devices" {
       alias     = optional(string, "")
       vnic_name = optional(string, "")
       pod_id    = optional(number, 1)
-      node_id   = number
+      node_id   = optional(number)
       node2_id  = optional(number)
       fex_id    = optional(number)
       module    = optional(number, 1)
