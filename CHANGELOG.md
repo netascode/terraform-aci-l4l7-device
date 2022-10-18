@@ -1,3 +1,7 @@
+## 0.2.2 (unreleased)
+
+- Allow logical interface without path
+
 ## 0.2.1
 
 - Allow logical interfaces without encap
