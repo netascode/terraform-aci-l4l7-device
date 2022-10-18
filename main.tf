@@ -96,7 +96,7 @@ resource "aci_rest_managed" "vnsRsCIfPathAtt_port" {
 }
 
 resource "aci_rest_managed" "vnsRsCIfPathAtt_channel" {
-  for_each   = { for interface in local.concrete_dev_ifaces : interface.id => interface if interface.port != null && interface.node_id != null }
+  for_each   = { for interface in local.concrete_dev_ifaces : interface.id => interface if interface.channel != null && interface.node_id != null }
   dn         = "${aci_rest_managed.vnsCIf["${each.value.device}-${each.value.interface}"].dn}/rsCIfPathAtt"
   class_name = "vnsRsCIfPathAtt"
   content = {
