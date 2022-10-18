@@ -188,7 +188,7 @@ variable "concrete_devices" {
 
   validation {
     condition = alltrue(flatten([
-      for c in var.concrete_devices : [for i in coalesce(c.interfaces, []) : (i.node_id >= 1 && i.node_id <= 4000)]
+      for c in var.concrete_devices : [for i in coalesce(c.interfaces, []) : (i.node_id == null || try(i.node_id >= 1 && i.node_id <= 4000, false))]
     ]))
     error_message = "`interfaces.node_id`: Minimum value: 1. Maximum value: 4000."
   }
