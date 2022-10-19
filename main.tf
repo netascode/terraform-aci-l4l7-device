@@ -63,8 +63,7 @@ resource "aci_rest_managed" "vnsRsALDevToDomP" {
   dn         = "${aci_rest_managed.vnsLDevVip.dn}/rsALDevToDomP"
   class_name = "vnsRsALDevToDomP"
   content = {
-    tDn = "uni/vmmp-VMware/dom-${var.vmm_domain}"
-
+    tDn = "uni/vmmp-${var.vmm_provider}/dom-${var.vmm_domain}"
   }
 }
 

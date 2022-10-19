@@ -108,6 +108,17 @@ variable "physical_domain" {
   }
 }
 
+variable "vmm_provider" {
+  description = "Type. Choices: `CloudFoundry`, `Kubernetes`, `Microsoft`, `OpenShift`, `OpenStack`, `Redhat`, `VMware`."
+  type        = string
+  default     = "VMware"
+
+  validation {
+    condition     = contains(["CloudFoundry", "Kubernetes", "Microsoft", "OpenShift", "OpenStack", "Redhat", "VMware"], var.vmm_provider)
+    error_message = "Allowed values are `CloudFoundry`, `Kubernetes`, `Microsoft`, `OpenShift`, `OpenStack`, `Redhat`, or `VMware`."
+  }
+}
+
 variable "vmm_domain" {
   description = "Virtual Machine Manager domain name."
   type        = string
