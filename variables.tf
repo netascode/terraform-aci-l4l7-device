@@ -108,15 +108,15 @@ variable "physical_domain" {
   }
 }
 
-variable "vmm_provider" {
-  description = "Type. Choices: `CloudFoundry`, `Kubernetes`, `Microsoft`, `OpenShift`, `OpenStack`, `Redhat`, `VMware`."
-  type        = string
+# variable "vmm_provider" {
+#   description = "Type. Choices: `CloudFoundry`, `Kubernetes`, `Microsoft`, `OpenShift`, `OpenStack`, `Redhat`, `VMware`."
+#   type        = string
 
-  validation {
-    condition     = contains(["CloudFoundry", "Kubernetes", "Microsoft", "OpenShift", "OpenStack", "Redhat", "VMware"], var.vmm_provider)
-    error_message = "Allowed values are `CloudFoundry`, `Kubernetes`, `Microsoft`, `OpenShift`, `OpenStack`, `Redhat`, or `VMware`."
-  }
-}
+#   validation {
+#     condition     = contains(["CloudFoundry", "Kubernetes", "Microsoft", "OpenShift", "OpenStack", "Redhat", "VMware"], var.vmm_provider)
+#     error_message = "Allowed values are `CloudFoundry`, `Kubernetes`, `Microsoft`, `OpenShift`, `OpenStack`, `Redhat`, or `VMware`."
+#   }
+# }
 
 variable "virtual_domain" {
   description = "Virtual domain name."
