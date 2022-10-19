@@ -108,23 +108,13 @@ variable "physical_domain" {
   }
 }
 
-# variable "vmm_provider" {
-#   description = "Type. Choices: `CloudFoundry`, `Kubernetes`, `Microsoft`, `OpenShift`, `OpenStack`, `Redhat`, `VMware`."
-#   type        = string
-
-#   validation {
-#     condition     = contains(["CloudFoundry", "Kubernetes", "Microsoft", "OpenShift", "OpenStack", "Redhat", "VMware"], var.vmm_provider)
-#     error_message = "Allowed values are `CloudFoundry`, `Kubernetes`, `Microsoft`, `OpenShift`, `OpenStack`, `Redhat`, or `VMware`."
-#   }
-# }
-
-variable "virtual_domain" {
-  description = "Virtual domain name."
+variable "vmm_domain" {
+  description = "Virtual Machine Manager domain name."
   type        = string
   default     = ""
 
   validation {
-    condition     = can(regex("^[a-zA-Z0-9_.-]{0,64}$", var.virtual_domain))
+    condition     = can(regex("^[a-zA-Z0-9_.-]{0,64}$", var.vmm_domain))
     error_message = "Allowed characters: `a`-`z`, `A`-`Z`, `0`-`9`, `_`, `.`, `-`. Maximum characters: 64."
   }
 }
