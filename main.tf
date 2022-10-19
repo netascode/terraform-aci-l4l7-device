@@ -50,7 +50,7 @@ resource "aci_rest_managed" "vnsLDevVip" {
 }
 
 resource "aci_rest_managed" "vnsRsALDevToPhysDomP" {
-  count      = var.physical_domain != "" ? 1 : 0
+  count      = var.type == "PHYSICAL" && var.physical_domain != "" ? 1 : 0
   dn         = "${aci_rest_managed.vnsLDevVip.dn}/rsALDevToPhysDomP"
   class_name = "vnsRsALDevToPhysDomP"
   content = {
@@ -59,7 +59,7 @@ resource "aci_rest_managed" "vnsRsALDevToPhysDomP" {
 }
 
 resource "aci_rest_managed" "vnsRsALDevToDomP" {
-  count      = var.vmm_domain != "" ? 1 : 0
+  count      = var.type == "VIRTUAL" && var.vmm_domain != "" ? 1 : 0
   dn         = "${aci_rest_managed.vnsLDevVip.dn}/rsALDevToDomP"
   class_name = "vnsRsALDevToDomP"
   content = {
