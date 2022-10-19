@@ -1,3 +1,7 @@
+## 0.2.3 (unreleased)
+
+- Add `vmm_domain` attribute
+
 ## 0.2.2
 
 - Allow logical interface without path
