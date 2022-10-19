@@ -58,6 +58,15 @@ resource "aci_rest_managed" "vnsRsALDevToPhysDomP" {
   }
 }
 
+resource "aci_rest_managed" "vnsRsALDevToDomP" {
+  count      = var.virtual_domain != "" ? 1 : 0
+  dn         = "${aci_rest_managed.vnsLDevVip.dn}/rsALDevToDomP"
+  class_name = "vnsRsALDevToDomP"
+  content = {
+    tDn = "uni/vmmp-${var.vmm_provider}/dom-${var.virtual_domain}"
+  }
+}
+
 resource "aci_rest_managed" "vnsCDev" {
   for_each   = { for device in var.concrete_devices : device.name => device }
   dn         = "${aci_rest_managed.vnsLDevVip.dn}/cDev-${each.value.name}"

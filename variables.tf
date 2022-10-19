@@ -108,6 +108,27 @@ variable "physical_domain" {
   }
 }
 
+variable "vmm_provider" {
+  description = "Type. Choices: `CloudFoundry`, `Kubernetes`, `Microsoft`, `OpenShift`, `OpenStack`, `Redhat`, `VMware`."
+  type        = string
+
+  validation {
+    condition     = contains(["CloudFoundry", "Kubernetes", "Microsoft", "OpenShift", "OpenStack", "Redhat", "VMware"], var.vmm_provider)
+    error_message = "Allowed values are `CloudFoundry`, `Kubernetes`, `Microsoft`, `OpenShift`, `OpenStack`, `Redhat`, or `VMware`."
+  }
+}
+
+variable "virtual_domain" {
+  description = "Virtual domain name."
+  type        = string
+  default     = ""
+
+  validation {
+    condition     = can(regex("^[a-zA-Z0-9_.-]{0,64}$", var.virtual_domain))
+    error_message = "Allowed characters: `a`-`z`, `A`-`Z`, `0`-`9`, `_`, `.`, `-`. Maximum characters: 64."
+  }
+}
+
 variable "concrete_devices" {
   description = "List of concrete devices. Allowed values `pod_id`: 1-255. Default value `pod_id`: 1. Allowed values `node_id`, `node2_id`: 1-4000. Allowed values `fex_id`: 101-199. Allowed values `module`: 1-9. Default value `module`: 1. Allowed values `port`: 1-127."
   type = list(object({
