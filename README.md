@@ -74,7 +74,6 @@ module "aci_l4l7_device" {
 | <a name="input_type"></a> [type](#input\_type) | Type. Choices: `PHYSICAL`, `VIRTUAL`, `CLOUD`. | `string` | `"PHYSICAL"` | no |
 | <a name="input_function"></a> [function](#input\_function) | Function. Choices: `None`, `GoTo`, `GoThrough`, `L2`, `L1`. | `string` | `"GoTo"` | no |
 | <a name="input_copy_device"></a> [copy\_device](#input\_copy\_device) | Copy device. | `bool` | `false` | no |
-| <a name="input_managed"></a> [managed](#input\_managed) | Managed. | `bool` | `false` | no |
 | <a name="input_promiscuous_mode"></a> [promiscuous\_mode](#input\_promiscuous\_mode) | Promiscuous mode. | `bool` | `false` | no |
 | <a name="input_service_type"></a> [service\_type](#input\_service\_type) | Service type. Choices: `ADC`, `FW`, `OTHERS`, `COPY`, `NATIVELB`. | `string` | `"OTHERS"` | no |
 | <a name="input_trunking"></a> [trunking](#input\_trunking) | Trunking. | `bool` | `false` | no |

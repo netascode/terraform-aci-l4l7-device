@@ -68,12 +68,6 @@ variable "copy_device" {
   default     = false
 }
 
-variable "managed" {
-  description = "Managed."
-  type        = bool
-  default     = false
-}
-
 variable "promiscuous_mode" {
   description = "Promiscuous mode."
   type        = bool

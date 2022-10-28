@@ -38,7 +38,7 @@ resource "aci_rest_managed" "vnsLDevVip" {
     devtype      = var.type
     funcType     = var.function
     isCopy       = var.copy_device == true ? "yes" : "no"
-    managed      = var.managed == true ? "yes" : "no"
+    managed      = "no"
     mode         = "legacy-Mode"
     name         = var.name
     nameAlias    = var.alias
