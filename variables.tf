@@ -184,7 +184,7 @@ variable "concrete_devices" {
     condition = alltrue(flatten([
       for c in var.concrete_devices : [for i in coalesce(c.interfaces, []) : can(regex("^[a-zA-Z0-9\\!#$%()*,-./:;@ _{|}~?&+]{0,256}$", i.name))]
     ]))
-    error_message = "`interfaces.name`: Allowed characters: `a`-`z`, `A`-`Z`, `0`-`9`,`\\`,`!`,`#`,`$`,`%`,`(`,`)`,`*`,`,`,`-`,`.`,`/`,`:`,`;`,`@`,` `,`_`,`{`,`|`,`}`,`~`,`?`,`&`,`+`. Maximum characters: 256."
+    error_message = "`interfaces.name`: Allowed characters: `a`-`z`, `A`-`Z`, `0`-`9`, `\\`, `!`, `#`, `$`, `%`, `(`, `)`, `*`, `,`, `-`, `.`, `/`, `:`, `;`, `@`, ` `, `_`, `{`, `|`, `}`, `~`, `?`, `&`, `+`. Maximum characters: 256."
   }
 
   validation {
@@ -296,6 +296,6 @@ variable "logical_interfaces" {
     condition = alltrue(flatten([
       for l in var.logical_interfaces : [for c in coalesce(l.concrete_interfaces, []) : can(regex("^[a-zA-Z0-9\\!#$%()*,-./:;@ _{|}~?&+]{0,256}$", c.interface))]
     ]))
-    error_message = "`interface`: Allowed characters: `a`-`z`, `A`-`Z`, `0`-`9`,`\\`,`!`,`#`,`$`,`%`,`(`,`)`,`*`,`,`,`-`,`.`,`/`,`:`,`;`,`@`,` `,`_`,`{`,`|`,`}`,`~`,`?`,`&`,`+`. Maximum characters: 256."
+    error_message = "`interface`: Allowed characters: `a`-`z`, `A`-`Z`, `0`-`9`, `\\`, `!`, `#`, `$`, `%`, `(`, `)`, `*`, `,`, `-`, `.`, `/`, `:`, `;`, `@`, ` `, `_`, `{`, `|`, `}`, `~`, `?`, `&`, `+`. Maximum characters: 256."
   }
 }
