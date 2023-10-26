@@ -1,4 +1,4 @@
-## 0.2.4 (unreleased)
+## 0.2.4
 
 - Fix input validation of `concrete_devices` and `logical_interfaces` attributes
 
