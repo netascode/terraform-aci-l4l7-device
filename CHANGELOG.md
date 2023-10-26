@@ -1,3 +1,7 @@
+## 0.2.4 (unreleased)
+
+- Fix input validation of `concrete_devices` and `logical_interfaces` attributes
+
 ## 0.2.3
 
 - Add `vmm_domain` attribute
